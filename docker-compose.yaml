@@ -1,0 +1,75 @@
+services:
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_KRAFT_MODE: "true"
+      KAFKA_PROCESS_ROLES: controller,broker
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # one broker - one replica.
+      KAFKA_LOG_RETENTION_HOURS: 168  # 7 days.
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      CLUSTER_ID: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/var/lib/kafka/data
+    networks:
+      - africahrlm-leave-network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres-leave
+    environment:
+      POSTGRES_DB: africahr-leave
+      POSTGRES_USER: cynthia
+      POSTGRES_PASSWORD: mySecretP@ssword
+    ports:
+      - "5435:5432"
+    networks:
+      - africahrlm-leave-network
+    volumes:
+      - leave_pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "secureRedisPassword"]
+    environment:
+      REDIS_PASSWORD: secureRedisPassword
+
+  africahrlm-leave-service:
+    image: cynthiaaa877/africahrlm-leave-service:latest
+    container_name: africahrlm-leave-service
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5435/africahr-leave
+      SPRING_DATASOURCE_USERNAME: cynthia
+      SPRING_DATASOURCE_PASSWORD: mySecretP@ssword
+    ports:
+      - "9091:9091"
+    networks:
+      - africahrlm-leave-network
+
+networks:
+  africahrlm-leave-network:
+    driver: bridge
+
+volumes:
+  leave_pgdata:
+
+
