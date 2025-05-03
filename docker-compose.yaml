@@ -34,7 +34,7 @@ services:
     environment:
       POSTGRES_DB: africahr-leave
       POSTGRES_USER: cynthia
-      POSTGRES_PASSWORD: mySecretp@ssword
+      POSTGRES_PASSWORD: mySecretP@ssword
     ports:
       - "5435:5432"
     networks:
@@ -59,14 +59,14 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/africahr-leave
       SPRING_DATASOURCE_USERNAME: cynthia
-      SPRING_DATASOURCE_PASSWORD: mySecretp@ssword
+      SPRING_DATASOURCE_PASSWORD: mySecretP@ssword
       SPRING_CACHE_TYPE: redis
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
       SPRING_REDIS_PASSWORD: AosMail@Pass@1234%(k
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     ports:
-      - "9091:9091"
+      - "8089:8089"
     networks:
       - africahrlm-leave-network
 
