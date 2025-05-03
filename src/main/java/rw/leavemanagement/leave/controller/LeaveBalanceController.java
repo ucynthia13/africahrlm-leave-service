@@ -17,6 +17,18 @@ public class LeaveBalanceController {
         this.leaveBalanceService=leaveBalanceService;
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<LeaveBalance> createLeaveBalance(
+            @RequestParam String userId,
+            @RequestParam ELeaveType leaveType,
+            @RequestParam Integer year,
+            @RequestParam(defaultValue = "0.0") Double initialBalance
+    ) {
+        LeaveBalance balance = leaveBalanceService.createLeaveBalance(userId, leaveType, year, initialBalance);
+        return ResponseEntity.ok(balance);
+    }
+
+
     // Get the current leave balance for a user for a specific leave type and year
     @GetMapping("/{userId}/{leaveType}/{year}")
     public ResponseEntity<LeaveBalance> getLeaveBalance(
