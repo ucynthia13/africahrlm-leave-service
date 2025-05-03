@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ILeaveBalance extends JpaRepository<LeaveBalance, UUID> {
+public interface ILeaveBalance extends JpaRepository<LeaveBalance, String> {
 
     // Find the leave balance by user ID, leave type, and year
     Optional<LeaveBalance> findByUserIdAndLeaveTypeAndYear(String userId, ELeaveType leaveType, Integer year);

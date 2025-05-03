@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ILeaveRequest extends JpaRepository<LeaveRequest, UUID> {
+public interface ILeaveRequest extends JpaRepository<LeaveRequest, String> {
     List<LeaveRequest> findByUserId(String userId);
     List<LeaveRequest> findByStatus(ELeaveStatus status);
+    List<LeaveRequest> findAll();
+
 }
