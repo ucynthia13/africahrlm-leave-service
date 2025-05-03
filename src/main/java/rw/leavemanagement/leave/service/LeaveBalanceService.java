@@ -5,6 +5,8 @@ import rw.leavemanagement.leave.enumerations.ELeaveType;
 
 public interface LeaveBalanceService {
 
+    LeaveBalance createLeaveBalance(String userId, ELeaveType leaveType, Integer year, Double initialBalance);
+
     LeaveBalance getLeaveBalance(String userId, ELeaveType leaveType, Integer year);
 
     LeaveBalance accrueLeaveBalance(String userId, Integer year);
@@ -12,4 +14,5 @@ public interface LeaveBalanceService {
     LeaveBalance carryForwardLeaveBalance(String userId, Integer year);
 
     void adjustLeaveBalance(String userId, ELeaveType leaveType, Double adjustmentAmount, Integer year);
+
 }

@@ -17,6 +17,19 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 
     private final ILeaveBalance iLeaveBalance;
 
+    @Override
+    public LeaveBalance createLeaveBalance(String userId, ELeaveType leaveType, Integer year, Double initialBalance) {
+        LeaveBalance balance = new LeaveBalance();
+        balance.setUserId(userId);
+        balance.setLeaveType(leaveType);
+        balance.setYear(year);
+        balance.setBalance(initialBalance);
+        balance.setCarriedForwardDays(0.0);
+        balance.setCarryExpirationDate(null);
+
+        return iLeaveBalance.save(balance);
+    }
+
     // Automatic monthly accrual (1.66 days/month, 20 days/year)
     @Override
     public LeaveBalance accrueLeaveBalance(String userId, Integer year) {
