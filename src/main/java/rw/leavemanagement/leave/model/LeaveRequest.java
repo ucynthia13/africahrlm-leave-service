@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "leave-request", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+@Table(name = "leave_request")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -49,5 +49,7 @@ public class LeaveRequest extends Base {
 
     @Column(name = "approval_date")
     private LocalDateTime approvalDate;
+
+
 
 }

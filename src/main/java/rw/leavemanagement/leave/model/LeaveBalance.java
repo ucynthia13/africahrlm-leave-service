@@ -7,7 +7,7 @@ import rw.leavemanagement.leave.enumerations.ELeaveType;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "leave-balance", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+@Table(name = "leave_balance")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class LeaveBalance extends Base {
     @Column(name = "leave_type", nullable = false)
     private ELeaveType leaveType;
     
-    @Column(nullable = false, name = "leave_balance")
+    @Column(nullable = false, name = "leave_balance_days")
     private Double balance;
     
     @Column(nullable = false, name = "leave_year")
